@@ -6,10 +6,12 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
+import static demoblaze.read.ReadProperties.readProperties;
+
 public class DemoBlazeTest extends BaseTest {
 
-    private final String userLogin = "User123user123";
-    private final String userPassword = "User123user123";
+    private final String USER_LOGIN = readProperties("user.login");
+    private final String USER_PASSWORD = readProperties("user.password");
 
     @Test(description = "Регистрация нового пользователя")
     public void testRegistrationNewUser() {
@@ -17,7 +19,7 @@ public class DemoBlazeTest extends BaseTest {
         String expectedAlertText = "Sign up successful.";
 
         demoBlazePage.openDemoBlazePage()
-                .newUserRegistration(userLogin, userPassword);
+                .newUserRegistration(USER_LOGIN, USER_PASSWORD);
 
         demoBlazePage.assertRegistrationNewUser(expectedAlertText);
     }
@@ -25,10 +27,10 @@ public class DemoBlazeTest extends BaseTest {
     @Test(description = "Авторизация пользователя")
     public void testLoginUser() {
         DemoBlazePage demoBlazePage = new DemoBlazePage(driver);
-        String expected = "Welcome " + userLogin;
+        String expected = "Welcome " + USER_LOGIN;
 
         demoBlazePage.openDemoBlazePage()
-                .loginUser(userLogin, userPassword);
+                .loginUser(USER_LOGIN, USER_PASSWORD);
 
         demoBlazePage.assertLoginUser(expected);
     }
@@ -39,7 +41,7 @@ public class DemoBlazeTest extends BaseTest {
         List<String> expectedCatMenu = List.of("Phones", "Laptops", "Monitors");
 
         demoBlazePage.openDemoBlazePage()
-                .loginUser(userLogin, userPassword);
+                .loginUser(USER_LOGIN, USER_PASSWORD);
 
         demoBlazePage.assertCategoryMenu(expectedCatMenu);
     }
@@ -50,7 +52,7 @@ public class DemoBlazeTest extends BaseTest {
         String expectedAlertText = "Product added.";
 
         demoBlazePage.openDemoBlazePage()
-                .loginUser(userLogin, userPassword)
+                .loginUser(USER_LOGIN, USER_PASSWORD)
                 .selectItemCategory("Laptops")
                 .selectCardTitle("MacBook Pro")
                 .clickAddToCartButton();
